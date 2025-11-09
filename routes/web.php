@@ -40,9 +40,9 @@ Route::get('/vokzals', [VokzalController::class, 'index'])
     
 Route::get('/vokzals/{id}', [VokzalController::class, 'show'])
     ->name('vokzals.show');
-	
+*/	
 Route::get('/dashboard/itog-dzhv', [DashboardController::class, 'itogDzhv']);
-*/
+
 Route::get('/preparation-data/create', [PreparationDataController::class, 'create'])
     ->name('preparation-data.create');
 
