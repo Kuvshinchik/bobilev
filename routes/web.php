@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\VokzalController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PreparationDataController;
+
 
 
 
@@ -32,7 +34,7 @@ Route::group([], function () {
 
 
 });
-
+/*
 Route::get('/vokzals', [VokzalController::class, 'index'])
     ->name('vokzals.index');
     
@@ -40,3 +42,9 @@ Route::get('/vokzals/{id}', [VokzalController::class, 'show'])
     ->name('vokzals.show');
 	
 Route::get('/dashboard/itog-dzhv', [DashboardController::class, 'itogDzhv']);
+*/
+Route::get('/preparation-data/create', [PreparationDataController::class, 'create'])
+    ->name('preparation-data.create');
+
+Route::post('/preparation-data', [PreparationDataController::class, 'store'])
+    ->name('preparation-data.store');
