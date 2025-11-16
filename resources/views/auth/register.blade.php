@@ -38,6 +38,16 @@
                                 @enderror
                             </div>
                         </div>
+						
+<div class="row mb-3">
+    <label for="invite_code" class="col-md-4 col-form-label text-md-end">{{ __('Код приглашения') }}</label>
+	<div class="col-md-6">
+    <input id="invite_code" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" type="text" name="invite_code" required />
+    @error('invite_code')
+        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+	</div>
+</div>
 
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>

@@ -1,0 +1,29 @@
+[33mcommit bd8ab05b597798cef4bf6ac43821c5b0469e9c7d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin6/master[m[33m)[m
+Author: lopheliaPertusa <m7208231@yandex.ru>
+Date:   Thu Nov 13 22:57:17 2025 +0300
+
+    1
+
+[33mcommit 127c6706dd85894ba28f3b4fa4d9c5e5d39fb6ea[m
+Author: lopheliaPertusa <m7208231@yandex.ru>
+Date:   Sun Nov 9 18:12:46 2025 +0300
+
+    1
+
+[33mcommit 482c39485b57dab0d51949425849e0d6a98617fd[m
+Author: lopheliaPertusa <m7208231@yandex.ru>
+Date:   Sun Nov 9 17:37:46 2025 +0300
+
+    1
+
+[33mcommit 14a027e8bf8a6b2b44cce503f1c2f67bd46b40d4[m
+Author: lopheliaPertusa <m7208231@yandex.ru>
+Date:   Sun Nov 9 14:36:58 2025 +0300
+
+    1
+
+[33mcommit ba8d9cf0701731054dcd9ebce20a8bd6423169ae[m
+Author: lopheliaPertusa <m7208231@yandex.ru>
+Date:   Sun Nov 9 14:05:39 2025 +0300
+
+    Исключена папка logs из отслеживания
