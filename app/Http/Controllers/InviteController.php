@@ -10,12 +10,9 @@ class InviteController extends Controller
 {
     public function create(Request $request)
     {
-        // Проверка админа (реализуйте middleware или gate)
-        $this->authorize('admin'); // Пример с Policy
-
-        $code = Str::random(32);
-        Invite::create(['code' => $code]);
-
-        return view('invites.create', compact('code'));
+        // Логика только для админов (добавьте проверку)
+    $code = Str::random(32);
+    Invite::create(['code' => $code]);
+    return view('invites.create', ['code' => $code]);
     }
 }
