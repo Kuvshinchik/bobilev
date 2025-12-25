@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/dashboard', 'dashboard')->name('dashboard');
             Route::get('/table', 'table')->name('table');
             Route::get('/analytics', 'analytics')->name('analytics');
+            Route::get('/get-vokzals', 'getVokzals')->name('get-vokzals'); // AJAX для фильтра
         });
 
     // Статические страницы
