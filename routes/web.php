@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/table', 'table')->name('table');
             Route::get('/analytics', 'analytics')->name('analytics');
             Route::get('/get-vokzals', 'getVokzals')->name('get-vokzals'); // AJAX для фильтра
+			Route::get('/export-vaccination', [WorkerController::class, 'exportVaccination'])->name('export.vaccination');
         });
 
     // Статические страницы

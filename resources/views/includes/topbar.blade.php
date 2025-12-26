@@ -31,7 +31,11 @@
 
                                         <!-- item-->
                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <div class="notify-icon"><img src="{{ asset('assets/images/users/avatar-2.jpg') }}" alt="user-img" class="img-fluid rounded-circle" /> </div>
+                                            <div class="notify-icon">
+											
+											<img src="{{ asset('assets/images/users/avatar-2.jpg') }}" alt="user-img" class="img-fluid rounded-circle" />
+
+											</div>
                                             <p class="notify-details"><b>Charles M. Jones</b><small class="text-muted">Dummy text of the printing and typesetting industry.</small></p>
                                         </a>
 
@@ -47,7 +51,9 @@
                                             <p class="notify-details"><b>Luis M. Konrad</b><small class="text-muted">It is a long established fact that a reader will</small></p>
                                         </a>
 
-                                        <!-- All-->
+                                        <!-- All
+										
+										-->
                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             View All
                                         </a>
@@ -94,21 +100,24 @@
                                 </li>
 
                                 <li class="list-inline-item dropdown notification-list">
-                                    <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
-                                       aria-haspopup="false" aria-expanded="false">
-                                        <img src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="user" class="rounded-circle">
-                                    </a>
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false" style="color:#fff">
+{{ auth()->user()->name }} 		
+									</a>
                                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                                        <!-- item-->
-                                        <div class="dropdown-item noti-title">
-                                            <h5>Welcome</h5>
-                                        </div>
-                                        <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> Profile</a>
-                                        <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5 text-muted"></i> My Wallet</a>
-                                        <a class="dropdown-item" href="#"><span class="badge badge-success float-right">5</span><i class="mdi mdi-settings m-r-5 text-muted"></i> Settings</a>
-                                        <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5 text-muted"></i> Lock screen</a>
+                                        <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> Профиль</a>
+                    
+                                        <a class="dropdown-item" href="#"><span class="badge badge-success float-right"><!--5--></span><i class="mdi mdi-settings m-r-5 text-muted"></i> Настройки</a>
+                     
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="mdi mdi-logout m-r-5 text-muted"></i> Logout</a>
+										
+										
+						<form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="dropdown-item" type="submit">
+							<i class="mdi mdi-logout m-r-5 text-muted"></i>							
+							Выйти
+							</button>
+                        </form>
                                     </div>
                                 </li>
 
@@ -119,15 +128,7 @@
                                     <button class="button-menu-mobile open-left waves-light waves-effect">
                                         <i class="mdi mdi-menu"></i>
                                     </button>
-                                </li>
-								<!-- 
-                                <li class="hide-phone app-search">
-                                    <form role="search" class="">
-                                        <input type="text" placeholder="Search..." class="form-control">
-                                        <a href=""><i class="fa fa-search"></i></a>
-                                    </form>
-                                </li>
-								-->
+                                </li>								
                             </ul>
 
                             <div class="clearfix"></div>

@@ -3,6 +3,7 @@
 @section('title', 'Дашборд')
 
 @section('content')
+
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box d-flex align-items-center">
@@ -100,6 +101,7 @@
 </div>
 
 <!-- Таблица: Вакцинация по РДЖВ -->
+
 <div class="row">
     <div class="col-12">
         <div class="card m-b-30">
@@ -108,13 +110,23 @@
                     <i class="mdi mdi-table-large text-primary mr-2"></i>
                     Сводная таблица вакцинации
                 </h4>
-                
+        {{-- Кнопка экспорта в Excel --}}
+        <a href="{{ route('worker.export.vaccination') }}" class="btn btn-success">
+            <i class="mdi mdi-file-excel mr-1"></i>
+            Скачать в Excel
+        </a>
+		</div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped mb-0">
                         <thead class="thead-dark">
                             <tr>
-                                <th class="text-center" style="width: 50px;">№ п/п</th>
-                                <th>Наименование РДЖВ</th>
+                                <th class="text-center align-middle" style="width: 50px;" rowspan="2">№ п/п</th>
+                                <th class="align-middle" rowspan="2">Наименование РДЖВ</th>
+                                <th class="align-middle" rowspan="2">Категория персонала</th>
+                                
+                                <th class="text-center" colspan="4">Показатели вакцинации</th>
+                            </tr>
+                            <tr>
                                 <th class="text-center">Численность<br>работников (чел.)</th>
                                 <th class="text-center">Прошли<br>вакцинацию (чел.)</th>
                                 <th class="text-center">% вакцини-<br>рованных</th>
@@ -122,43 +134,176 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- Итоговая строка по всему ДЖВ --}}
+                            {{-- Итоговая строка ИТОГО --}}
                             <tr class="table-primary font-weight-bold">
-                                <td class="text-center">—</td>
-                                <td><strong>ВСЕГО по ДЖВ</strong></td>
-                                <td class="text-center">{{ number_format($totalWorkers, 0, '', ' ') }}</td>
-                                <td class="text-center">{{ number_format($vaccinatedCount, 0, '', ' ') }}</td>
+                                <td class="text-center align-middle" rowspan="4">—</td>
+                                <td class="align-middle" rowspan="4"><strong>ИТОГО</strong></td>
+                                <td class="text-center">кадры массовых профессий</td>
+                                @php
+                                    $itogo_cat1_total = 0;
+                                    $itogo_cat1_vacc = 0;
+                                    foreach ($tableData as $rdzvData) {
+                                        if (isset($rdzvData['categories']['кадры массовых профессий'])) {
+                                            $itogo_cat1_total += $rdzvData['categories']['кадры массовых профессий']['total'];
+                                            $itogo_cat1_vacc += $rdzvData['categories']['кадры массовых профессий']['vaccinated'];
+                                        }
+                                    }
+                                    $itogo_cat1_percent = $itogo_cat1_total > 0 ? round(($itogo_cat1_vacc / $itogo_cat1_total) * 100, 1) : 0;
+                                    $itogo_cat1_level = round($itogo_cat1_percent / 75, 2);
+                                @endphp
+                                <td class="text-center">{{ number_format($itogo_cat1_total, 0, '', ' ') }}</td>
+                                <td class="text-center">{{ number_format($itogo_cat1_vacc, 0, '', ' ') }}</td>
+                                <td class="text-center">
+                                    <span class="badge {{ $itogo_cat1_percent >= 75 ? 'badge-success' : 'badge-warning' }} px-2 py-1">
+                                        {{ $itogo_cat1_percent }}%
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge {{ $itogo_cat1_level >= 1 ? 'badge-success' : 'badge-warning' }} px-2 py-1">
+                                        {{ $itogo_cat1_level }}
+                                    </span>
+                                </td>
+                            </tr>
+                            
+                            <tr class="table-primary font-weight-bold">
+                                <td class="text-center">работники, непосредственно связанные с обслуживанием пассажиров</td>
+                                @php
+                                    $itogo_cat2_total = 0;
+                                    $itogo_cat2_vacc = 0;
+                                    foreach ($tableData as $rdzvData) {
+                                        if (isset($rdzvData['categories']['работники, непосредственно связанные с обслуживанием пассажиров'])) {
+                                            $itogo_cat2_total += $rdzvData['categories']['работники, непосредственно связанные с обслуживанием пассажиров']['total'];
+                                            $itogo_cat2_vacc += $rdzvData['categories']['работники, непосредственно связанные с обслуживанием пассажиров']['vaccinated'];
+                                        }
+                                    }
+                                    $itogo_cat2_percent = $itogo_cat2_total > 0 ? round(($itogo_cat2_vacc / $itogo_cat2_total) * 100, 1) : 0;
+                                    $itogo_cat2_level = round($itogo_cat2_percent / 75, 2);
+                                @endphp
+                                <td class="text-center">{{ number_format($itogo_cat2_total, 0, '', ' ') }}</td>
+                                <td class="text-center">{{ number_format($itogo_cat2_vacc, 0, '', ' ') }}</td>
+                                <td class="text-center">
+                                    <span class="badge {{ $itogo_cat2_percent >= 75 ? 'badge-success' : 'badge-warning' }} px-2 py-1">
+                                        {{ $itogo_cat2_percent }}%
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge {{ $itogo_cat2_level >= 1 ? 'badge-success' : 'badge-warning' }} px-2 py-1">
+                                        {{ $itogo_cat2_level }}
+                                    </span>
+                                </td>
+                            </tr>
+                            
+                            <tr class="table-primary font-weight-bold">
+                                <td class="text-center">остальные</td>
+                                @php
+                                    $itogo_cat3_total = 0;
+                                    $itogo_cat3_vacc = 0;
+                                    foreach ($tableData as $rdzvData) {
+                                        if (isset($rdzvData['categories']['остальные'])) {
+                                            $itogo_cat3_total += $rdzvData['categories']['остальные']['total'];
+                                            $itogo_cat3_vacc += $rdzvData['categories']['остальные']['vaccinated'];
+                                        }
+                                    }
+                                    $itogo_cat3_percent = $itogo_cat3_total > 0 ? round(($itogo_cat3_vacc / $itogo_cat3_total) * 100, 1) : 0;
+                                    $itogo_cat3_level = round($itogo_cat3_percent / 75, 2);
+                                @endphp
+                                <td class="text-center">{{ number_format($itogo_cat3_total, 0, '', ' ') }}</td>
+                                <td class="text-center">{{ number_format($itogo_cat3_vacc, 0, '', ' ') }}</td>
+                                <td class="text-center">
+                                    <span class="badge {{ $itogo_cat3_percent >= 75 ? 'badge-success' : 'badge-warning' }} px-2 py-1">
+                                        {{ $itogo_cat3_percent }}%
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge {{ $itogo_cat3_level >= 1 ? 'badge-success' : 'badge-warning' }} px-2 py-1">
+                                        {{ $itogo_cat3_level }}
+                                    </span>
+                                </td>
+                            </tr>
+                            
+                            <tr class="table-primary font-weight-bold">
+                                <td class="text-center"><strong>ВСЕГО</strong></td>
+                                <td class="text-center"><strong>{{ number_format($totalWorkers, 0, '', ' ') }}</strong></td>
+                                <td class="text-center"><strong>{{ number_format($vaccinatedCount, 0, '', ' ') }}</strong></td>
                                 <td class="text-center">
                                     <span class="badge {{ $totalVaccinatedPercent >= 75 ? 'badge-success' : 'badge-warning' }} px-2 py-1">
-                                        {{ $totalVaccinatedPercent }}%
+                                        <strong>{{ $totalVaccinatedPercent }}%</strong>
                                     </span>
                                 </td>
                                 <td class="text-center">
                                     @php $totalTargetLevel = round($totalVaccinatedPercent / 75, 2); @endphp
                                     <span class="badge {{ $totalTargetLevel >= 1 ? 'badge-success' : 'badge-warning' }} px-2 py-1">
-                                        {{ $totalTargetLevel }}
+                                        <strong>{{ $totalTargetLevel }}</strong>
                                     </span>
                                 </td>
                             </tr>
                             
                             {{-- Данные по каждой РДЖВ --}}
-                            @foreach($chartData as $index => $row)
-                            <tr>
-                                <td class="text-center">{{ $index + 1 }}</td>
-                                <td>{{ $row['rdzv'] }}</td>
-                                <td class="text-center">{{ number_format($row['total'], 0, '', ' ') }}</td>
-                                <td class="text-center">{{ number_format($row['vaccinated'], 0, '', ' ') }}</td>
-                                <td class="text-center">
-                                    <span class="badge {{ $row['vaccinated_percent'] >= 75 ? 'badge-success' : ($row['vaccinated_percent'] >= 50 ? 'badge-warning' : 'badge-danger') }} px-2 py-1">
-                                        {{ $row['vaccinated_percent'] }}%
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    <span class="badge {{ $row['target_level'] >= 1 ? 'badge-success' : ($row['target_level'] >= 0.7 ? 'badge-warning' : 'badge-danger') }} px-2 py-1">
-                                        {{ $row['target_level'] }}
-                                    </span>
-                                </td>
-                            </tr>
+                            @php $rowNumber = 1; @endphp
+                            @foreach($tableData as $rdzvData)
+                                @php
+                                    $categories = [
+                                        'кадры массовых профессий',
+                                        'работники, непосредственно связанные с обслуживанием пассажиров',
+                                        'остальные'
+                                    ];
+                                    $rowspanCount = count($categories) + 1; // +1 для строки "ВСЕГО по РДЖВ"
+                                @endphp
+                                
+                                @foreach($categories as $catIndex => $categoryName)
+                                    <tr>
+                                        @if($catIndex === 0)
+                                            <td class="text-center align-middle" rowspan="{{ $rowspanCount }}">{{ $rowNumber }}</td>
+                                            <td class="align-middle" rowspan="{{ $rowspanCount }}">{{ $rdzvData['rdzv'] }}</td>
+                                        @endif
+                                        
+                                        <td class="text-center">{{ $categoryName }}</td>
+                                        
+                                        @if(isset($rdzvData['categories'][$categoryName]))
+                                            @php $catData = $rdzvData['categories'][$categoryName]; @endphp
+                                            <td class="text-center">{{ number_format($catData['total'], 0, '', ' ') }}</td>
+                                            <td class="text-center">{{ number_format($catData['vaccinated'], 0, '', ' ') }}</td>
+                                            <td class="text-center">
+                                                <span class="badge {{ $catData['vaccinated_percent'] >= 75 ? 'badge-success' : ($catData['vaccinated_percent'] >= 50 ? 'badge-warning' : 'badge-danger') }} px-2 py-1">
+                                                    {{ $catData['vaccinated_percent'] }}%
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge {{ $catData['target_level'] >= 1 ? 'badge-success' : ($catData['target_level'] >= 0.7 ? 'badge-warning' : 'badge-danger') }} px-2 py-1">
+                                                    {{ $catData['target_level'] }}
+                                                </span>
+                                            </td>
+                                        @else
+                                            <td class="text-center">0</td>
+                                            <td class="text-center">0</td>
+                                            <td class="text-center">
+                                                <span class="badge badge-secondary px-2 py-1">0%</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge badge-secondary px-2 py-1">0</span>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                                
+                                {{-- Строка ВСЕГО по текущей РДЖВ --}}
+                                <tr class="table-light font-weight-bold">
+                                    <td class="text-center"><strong>ВСЕГО</strong></td>
+                                    <td class="text-center"><strong>{{ number_format($rdzvData['total_workers'], 0, '', ' ') }}</strong></td>
+                                    <td class="text-center"><strong>{{ number_format($rdzvData['total_vaccinated'], 0, '', ' ') }}</strong></td>
+                                    <td class="text-center">
+                                        <span class="badge {{ $rdzvData['vaccinated_percent'] >= 75 ? 'badge-success' : ($rdzvData['vaccinated_percent'] >= 50 ? 'badge-warning' : 'badge-danger') }} px-2 py-1">
+                                            <strong>{{ $rdzvData['vaccinated_percent'] }}%</strong>
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge {{ $rdzvData['target_level'] >= 1 ? 'badge-success' : ($rdzvData['target_level'] >= 0.7 ? 'badge-warning' : 'badge-danger') }} px-2 py-1">
+                                            <strong>{{ $rdzvData['target_level'] }}</strong>
+                                        </span>
+                                    </td>
+                                </tr>
+                                
+                                @php $rowNumber++; @endphp
                             @endforeach
                         </tbody>
                     </table>
@@ -175,7 +320,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @push('styles')
@@ -302,3 +446,31 @@ $(function() {
 });
 </script>
 @endpush
+
+	{{--
+	
+	dd($row)
+	array:6 [▼ // resources\views/worker/dashboard.blade.php
+  "rdzv" => "ЮУР"
+  "vaccinated" => 282
+  "total" => 288
+  "percent" => 4.47
+  "vaccinated_percent" => 97.9
+  "target_level" => 1.31
+]
+	
+	
+	
+	
+{{dd($chartData);}}	
+
+	
+	 1 => array:6 [▼
+      "rdzv" => "ВСИБ"
+      "vaccinated" => 281
+      "total" => 310
+      "percent" => 4.45
+      "vaccinated_percent" => 90.6
+      "target_level" => 1.21
+    ]
+	--}}

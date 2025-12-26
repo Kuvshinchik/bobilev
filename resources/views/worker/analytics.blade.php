@@ -55,7 +55,7 @@
             <div class="card-body">
                 <h4 class="mt-0 header-title mb-4">
                     <i class="mdi mdi-web text-primary mr-2"></i>
-                    Статистика по statusSite
+                    Статистика по status
                 </h4>
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
@@ -69,7 +69,7 @@
                             @foreach($statusSiteStats as $item)
                             <tr>
                                 <td>
-                                    <span class="badge badge-soft-primary px-2 py-1">{{ $item->statusSite }}</span>
+                                    <span class="badge badge-soft-primary px-2 py-1">{{ $item->status }}</span>
                                 </td>
                                 <td class="text-right">
                                     <strong>{{ number_format($item->count, 0, ',', ' ') }}</strong> чел.
@@ -154,10 +154,10 @@
 
 <h1>Аналитика</h1>
 
-<h2>Статистика по statusSite</h2>
+<h2>Статистика по status</h2>
 <ul>
 @foreach($statusSiteStats as $item)
-    <li>Статус {{ $item->statusSite }}: {{ $item->count }} чел.</li>
+    <li>Статус {{ $item->status }}: {{ $item->count }} чел.</li>
 @endforeach
 </ul>
 
